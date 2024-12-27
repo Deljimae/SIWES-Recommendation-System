@@ -61,16 +61,13 @@ module.exports = (sequelize, DataTypes) => {
     role: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: 'user',
-      isIn: [['user', 'admin']],
       validate: {
-        notNull: {
-          msg: 'Role is required'
-        },
-        notEmpty: {
-          msg: 'Role is required'
+        isIn: {
+          args: [['user', 'admin']], // specify allowed roles
+          msg: 'Role must be either user or admin'
         }
-      }
+      },
+      defaultValue: 'user'
     }
   }, {
     sequelize,

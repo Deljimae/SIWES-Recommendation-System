@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const { errorResponse } = require('../utils/response');
 
 const authMiddleware = {
   // Middleware to verify JWT token
@@ -8,12 +9,12 @@ const authMiddleware = {
       const authHeader = req.headers.authorization;
 
       if (!authHeader) {
-        return res.status(401).json({ message: 'No token provided' });
+        return errorResponse(res, 'No token provided', 401);
       }
 
       // Check if it's a Bearer token
       if (!authHeader.startsWith('Bearer ')) {
-        return res.status(401).json({ message: 'Invalid token format' });
+        return errorResponse(res, 'Invalid token format', 401);
       }
 
       // Extract the token
@@ -28,9 +29,9 @@ const authMiddleware = {
       next();
     } catch (error) {
       if (error.name === 'TokenExpiredError') {
-        return res.status(401).json({ message: 'Token expired' });
+        return errorResponse(res, 'Token expired', 401);
       }
-      return res.status(401).json({ message: 'Invalid token' });
+      return errorResponse(res, 'Invalid token', 401);
     }
   },
 
@@ -38,7 +39,7 @@ const authMiddleware = {
   checkRole: (roles) => {
     return (req, res, next) => {
       if (!req.user) {
-        return res.status(401).json({ message: 'Unauthorized' });
+        return errorResponse(res, 'Unauthorized', 401);
       }
 
       // Check if user is admin or regular user
@@ -49,7 +50,7 @@ const authMiddleware = {
 
       const hasRole = roles.includes(req.user.role);
       if (!hasRole) {
-        return res.status(403).json({ message: 'Forbidden - Insufficient permissions' });
+        return errorResponse(res, 'Forbidden - Insufficient permissions', 403);
       }
 
       next();

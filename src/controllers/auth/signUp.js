@@ -1,5 +1,5 @@
 // Controller for handling user signup
-const { User } = require('../../../models');
+const { User, Profile } = require('../../../models');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { errorResponse, customResponse, alreadyExistResponse, successResponse } = require('../../utils/response');
@@ -32,6 +32,15 @@ exports.signUp = async (req, res) => {
         password: hashedPassword,
       }
     });
+
+    // Create user profile in the profile table
+    if (created) {
+      await Profile.create({
+        userId: user.uuid,
+        course_title: '',
+        topics_interested_in: []
+      });
+    }
 
     if (!created) {
       return alreadyExistResponse(res, 'User already exists');

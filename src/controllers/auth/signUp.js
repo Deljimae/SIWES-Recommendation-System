@@ -37,8 +37,10 @@ exports.signUp = async (req, res) => {
     if (created) {
       await Profile.create({
         userId: user.uuid,
-        course_title: '',
-        topics_interested_in: []
+        course_of_study: '',
+        interests: [],
+        skills: [],
+        career_goals: []
       });
     }
 

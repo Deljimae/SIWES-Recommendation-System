@@ -11,16 +11,32 @@ module.exports = {
       },
       uuid: {
         type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
         allowNull: false
       },
       userId: {
-        type: Sequelize.UUID
+        type: Sequelize.UUID,
+        allowNull: false,
+        references: {
+          model: 'users',
+          key: 'uuid'
+        }
       },
-      course_title: {
-        type: Sequelize.STRING
+      course_of_study: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
-      topics_interested_in: {
-        type: Sequelize.STRING
+      skills: {
+        type: Sequelize.ARRAY(Sequelize.STRING),
+        allowNull: false
+      },
+      career_goals: {
+        type: Sequelize.ARRAY(Sequelize.STRING),
+        allowNull: false
+      },
+      interests: {
+        type: Sequelize.ARRAY(Sequelize.STRING),
+        allowNull: false
       },
       createdAt: {
         allowNull: false,

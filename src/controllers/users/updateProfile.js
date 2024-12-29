@@ -20,8 +20,10 @@ const updateProfile = async (req, res) => {
   try {
 
     const schema = joi.object({
-      courseTitle: joi.string().required(),
-      topicsInterestedIn: joi.array().items(joi.string()).required()
+      courseOfStudy: joi.string().required(),
+      interests: joi.array().items(joi.string()).required(),
+      careerGoals: joi.array().items(joi.string()).required(),
+      skills: joi.array().items(joi.string()).required()
     }).validate(req.body)
 
     const { error } = schema;
@@ -29,7 +31,7 @@ const updateProfile = async (req, res) => {
       return errorResponse(res, error.details[0].message, 400)
     }
 
-    const { courseTitle, topicsInterestedIn } = req.body;
+    const { courseOfStudy, interests, skills, careerGoals } = req.body;
     const { userId } = req.user;
 
     // check if user exists
@@ -40,13 +42,15 @@ const updateProfile = async (req, res) => {
 
     // update the profile table
     await Profile.update({
-      course_title: courseTitle,
-      topics_interested_in: topicsInterestedIn
+      course_of_study: courseOfStudy,
+      interests,
+      skills,
+      career_goals: careerGoals
     }, {
       where: { userId }
     })
 
-    return successResponse(res, 'Profile updated successfully')
+    return successResponse(res, 'Profile updated successfully', await Profile.findOne({ userId }))
 
   } catch (error) {
     return errorResponse(res, error.message)

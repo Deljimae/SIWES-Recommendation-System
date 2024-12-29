@@ -20,7 +20,8 @@ module.exports = (sequelize, DataTypes) => {
   Company.init({
     uuid: {
       type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4
+      defaultValue: DataTypes.UUIDV4,
+      allowNull: false
     },
     email: {
       type: DataTypes.STRING,

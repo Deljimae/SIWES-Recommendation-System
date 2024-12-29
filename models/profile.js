@@ -13,25 +13,38 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       this.belongsTo(User, { foreignKey: 'uuid' });
     }
+
+    toJSON() {
+      return { ...this.get(), id: undefined, uuid: undefined }
+    }
   }
   Profile.init({
     uuid: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
+      allowNull: false
     },
     userId: {
       type: DataTypes.UUID,
       allowNull: false,
       references: {
-        model: 'Users',
+        model: 'users',
         key: 'uuid'
       }
     },
-    course_title: {
+    course_of_study: {
       type: DataTypes.STRING,
       allowNull: false
     },
-    topics_interested_in: {
+    skills: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+      allowNull: false
+    },
+    career_goals: {
+      type: DataTypes.ARRAY(DataTypes.STRING),
+      allowNull: false
+    },
+    interests: {
       type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: false
     }

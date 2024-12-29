@@ -11,7 +11,8 @@ module.exports = {
       },
       uuid: {
         type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4
+        defaultValue: Sequelize.UUIDV4,
+        allowNull: false
       },
       email: {
         type: Sequelize.STRING,

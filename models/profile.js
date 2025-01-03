@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate({ User }) {
       // define association here
-      this.belongsTo(User, { foreignKey: 'uuid' });
+      this.belongsTo(User, { foreignKey: 'userId', targetKey: 'uuid', as: 'User' });
     }
 
     toJSON() {

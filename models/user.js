@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate({ Profile }) {
       // define association here
-      this.hasMany(Profile, { foreignKey: 'uuid' });
+      this.hasMany(Profile, { foreignKey: 'userId', sourceKey: 'uuid', as: 'Profile' });
     }
 
     toJSON() {
@@ -22,7 +22,8 @@ module.exports = (sequelize, DataTypes) => {
     uuid: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
-      allowNull: false
+      allowNull: false,
+      primaryKey: true
     },
     name: {
       type: DataTypes.STRING,

@@ -14,10 +14,10 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": process.env.DB_USERNAME,
-    "password": process.env.DB_PASSWORD,
-    "database": process.env.DB_NAME,
-    "host": process.env.DB_HOST,
+    "username": "scriptnsam",
+    "password": "zMENaAgiMg9sPlT8pJ7Ovlyc8gQ4a84R",
+    "database": "siwes_db",
+    "host": "dpg-cts8d1a3esus73do4gu0-a.frankfurt-postgres.render.com",
     "dialect": "postgres"
   }
 }

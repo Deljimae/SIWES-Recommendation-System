@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon app.js",
     "db-update": "npx sequelize-cli db:migrate:undo:all && npx sequelize-cli db:migrate",
-    "db-seed": "npx sequelize-cli db:seed:all"
+    "db-seed": "npx sequelize-cli db:seed:all",
+    "start": "node app.js"
   },
   "keywords": [],
   "author": "",

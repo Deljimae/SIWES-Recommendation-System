@@ -44,8 +44,9 @@ exports.signUp = async (req, res) => {
       });
     }
 
+
     if (!created) {
-      return alreadyExistResponse(res, 'User already exists');
+      return customResponse(res, 400, false, 'User already exists')
     }
 
     // Generate a JWT token

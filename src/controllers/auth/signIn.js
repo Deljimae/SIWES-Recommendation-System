@@ -47,7 +47,7 @@ const signIn = async (req, res) => {
     return successResponse(res, 'User signed in successfully', { userId: user.uuid, token, email: user.email })
 
   } catch (error) {
-
+    console.log(error)
     return errorResponse(res)
   }
 };

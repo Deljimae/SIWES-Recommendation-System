@@ -27,10 +27,10 @@ async function generateRecommendationsForUser(req, res) {
       return errorResponse(res, `User with ID ${userId} not found.`, 404);
     }
 
-    if (!user.Profile || !user.Profile[0].career_goals || user.Profile[0].career_goals.length === 0) {
-      console.warn(`User ${user.uuid} has no career goals.`);
+    if (!user.Profile || !user.Profile[0].interests || user.Profile[0].interests.length === 0) {
+      console.warn(`User ${user.uuid} has not updated their interest.`);
       // return res.status(200).json({ message: "User has no career goals.", recommendations: [], user });
-      return successResponse(res, "User has no career goals.", { recommendations: [] })
+      return successResponse(res, "Please update your interests in the profile section", { recommendations: [] })
     }
 
     const companies = await Company.findAll();
@@ -40,7 +40,11 @@ async function generateRecommendationsForUser(req, res) {
       return successResponse(res, "No companies found.", { recommendations: [] })
     }
 
-    const combinedGoals = user.Profile[0].career_goals.join(" ");
+    let combinedGoals = user.Profile[0].interests.join(" ");
+
+    if (user.Profile || user.Profile[0].career_goals || user.Profile[0].career_goals.length !== 0) {
+      combinedGoals += " " + user.Profile[0].career_goals.join(" ");
+    }
 
     let userEmbedding;
     try {

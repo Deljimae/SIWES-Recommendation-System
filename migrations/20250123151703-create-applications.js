@@ -26,7 +26,7 @@ module.exports = {
         type: Sequelize.TEXT
       },
       status: {
-        type: Sequelize.ENUM("Under Review", "Accepted", "Declined"),
+        type: Sequelize.ENUM("Under Review", "Interviewed", "Declined"),
         allowNull: false,
         defaultValue: "Under Review"
       },

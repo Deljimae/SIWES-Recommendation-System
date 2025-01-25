@@ -11,10 +11,15 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Company.hasMany(models.Applications, {
+        foreignKey: 'company_uuid',
+        sourceKey: 'uuid',
+        as: 'applications'
+      })
     }
 
     toJSON() {
-      return { ...this.get(), id: undefined }
+      return { ...this.get(), id: undefined, password: undefined }
     }
   }
   Company.init({

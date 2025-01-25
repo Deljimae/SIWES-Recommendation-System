@@ -11,6 +11,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Applications.belongsTo(models.Company, {
+        foreignKey: 'company_uuid',
+        targetKey: 'uuid',
+        as: 'company'
+      });
     }
   }
   // You might want to consider adding:
@@ -37,7 +42,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT
     },
     status: {
-      type: DataTypes.ENUM("Under Review", "Accepted", "Declined"),
+      type: DataTypes.ENUM("Under Review", "Interviewed", "Declined"),
       allowNull: false,
       defaultValue: "Under Review"
     }

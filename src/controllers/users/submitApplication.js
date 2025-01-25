@@ -1,4 +1,4 @@
-const { Applications } = require("../../../models");
+const { Applications, Company } = require("../../../models");
 const { notFoundResponse, successResponse, errorResponse } = require("../../utils/response");
 
 // Controller for handling application submissions
@@ -45,27 +45,74 @@ const ApplicationController = {
     }
   },
 
-  // // Get application by ID
-  // async getApplication(id) {
-  //   try {
-  //     const application = await Applications.findById(id);
+  // Get applications for a specific user
+  async getApplications(req, res) {
+    const { userId: id } = req.user;
+    try {
+      const applications = await Applications.findAll({
+        where: {
+          user_uuid: id
+        },
+        include: [
+          { model: Company, as: 'company' }
+        ]
+      });
 
-  //     if (!application) {
-  //       throw new Error('Application not found');
+      if (applications.length === 0) {
+        return notFoundResponse(res, 'No application found')
+      }
+
+      return successResponse(res, 'Application retrieved successfully', applications);
+
+    } catch (error) {
+      console.error(error)
+      return errorResponse(res, error.message)
+    }
+  },
+
+  // Get applications for a specific company
+  // async getCompanyApplications(req, res) {
+  //   const { company_uuid } = req.headers;
+  //   try {
+  //     const applications = await Applications.findAll({
+  //       where: {
+  //         company_uuid
+  //       },
+  //       include: [
+  //         { model: Company, as: 'company' }
+  //       ]
+  //     });
+
+  //     if (applications.length === 0) {
+  //       return notFoundResponse(res, 'No application found')
   //     }
 
-  //     return {
-  //       success: true,
-  //       application
-  //     };
+  //     return successResponse(res, 'Application retrieved successfully', applications);
 
   //   } catch (error) {
-  //     return {
-  //       success: false,
-  //       error: error.message
-  //     };
+  //     console.error(error)
+  //     return errorResponse(res, error.message)
   //   }
   // },
+
+  // delelete application
+  async deleteApplication(req, res) {
+    const { id } = req.params;
+    try {
+      const application = await Applications.findByPk(id);
+
+      if (!application) {
+        return notFoundResponse(res, 'Application not found');
+      }
+
+      await application.destroy();
+
+      return successResponse(res, 'Application deleted successfully');
+
+    } catch (error) {
+      return errorResponse(res, error.message)
+    }
+  }
 
   // // Update application status
   // async updateStatus(id, status) {

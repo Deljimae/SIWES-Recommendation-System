@@ -16,6 +16,16 @@ module.exports = (sequelize, DataTypes) => {
         targetKey: 'uuid',
         as: 'company'
       });
+      Applications.belongsTo(models.Profile, {
+        foreignKey: 'user_uuid',
+        targetKey: 'userId',
+        as: 'profile',
+      });
+      Applications.belongsTo(models.User, {
+        foreignKey: 'user_uuid',
+        targetKey: 'uuid', // Ensure `userId` is correct in the `Profile` model
+        as: 'userDetails',
+      });
     }
   }
   // You might want to consider adding:
@@ -50,11 +60,10 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Applications',
     tableName: 'applications',
-    // Consider adding indexes:
-    // indexes: [
-    //   { fields: ['company_uuid'] },
-    //   { fields: ['user_uuid'] }
-    // ]
+    indexes: [
+      { fields: ['company_uuid'] },
+      { fields: ['user_uuid'] }
+    ]
   });
   return Applications;
 };

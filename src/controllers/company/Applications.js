@@ -1,4 +1,4 @@
-const { Applications, Company } = require('../../../models');
+const { Applications, Company, Profile, User } = require('../../../models');
 const { successResponse, errorResponse, customResponse } = require('../../utils/response');
 
 const applications = {
@@ -11,8 +11,11 @@ const applications = {
           company_uuid: companyId
         },
         include: [
-          { model: Company, as: 'company' }
-        ]
+          { model: Company, as: 'company', attributes: ['company_name', 'address', 'uuid', 'registrationNumber', 'contactPhone'] },
+          { model: Profile, as: 'profile', attributes: ['career_goals', 'course_of_study', 'interests', 'skills', 'uuid'] },
+          { model: User, as: 'userDetails', attributes: ['email', 'name'] }
+        ],
+        attributes: ['additional_information', 'createdAt', 'status', 'uuid']
       });
 
       // count for how many application with the status under review

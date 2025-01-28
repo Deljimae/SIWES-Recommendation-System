@@ -27,7 +27,7 @@ const applications = {
 
 
       if (applications.length === 0) {
-        return customResponse(res, 404, true, 'No applciation found', { applicationsReceived: 0, received: 0, scheduled: 0, interviewed: 0, declined: 0, pending_review: 0 });
+        return customResponse(res, 404, true, 'No applciation found', { data: { applicationsReceived: 0, received: 0, scheduled: 0, interviewed: 0, declined: 0, pending_review: 0 } });
       }
 
       return successResponse(res, 'Application retrieved successfully', { ...applications, pending_review, scheduled, interviewed, declined, applicationsReceived: totalApplicationsReceived });

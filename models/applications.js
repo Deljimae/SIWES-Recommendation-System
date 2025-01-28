@@ -52,7 +52,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT
     },
     status: {
-      type: DataTypes.ENUM("Under Review", "Interviewed", "Declined"),
+      type: DataTypes.ENUM("Under Review", "Scheduled", "Interviewed", "Declined"),
       allowNull: false,
       defaultValue: "Under Review"
     }

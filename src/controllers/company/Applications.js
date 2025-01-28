@@ -22,14 +22,15 @@ const applications = {
       const pending_review = applications.filter(application => application.status === 'Under Review').length;
       const interviewed = applications.filter(application => application.status === 'Interviewed').length;
       const declined = applications.filter(application => application.status === 'Declined').length;
+      const scheduled = applications.filter(application => application.status === 'Scheduled').length;
       const totalApplicationsReceived = applications.length;
 
 
       if (applications.length === 0) {
-        return customResponse(res, 404, true, 'No applciation found', { applicationsReceived: 0, received: 0, interviewed: 0, declined: 0, pending_review: 0 });
+        return customResponse(res, 404, true, 'No applciation found', { applicationsReceived: 0, received: 0, scheduled: 0, interviewed: 0, declined: 0, pending_review: 0 });
       }
 
-      return successResponse(res, 'Application retrieved successfully', { ...applications, pending_review, interviewed, declined, applicationsReceived: totalApplicationsReceived });
+      return successResponse(res, 'Application retrieved successfully', { ...applications, pending_review, scheduled, interviewed, declined, applicationsReceived: totalApplicationsReceived });
 
     } catch (error) {
       console.error(error)

@@ -24,7 +24,7 @@ const signIn = async (req, res) => {
 
     // Check if user exists
     const user = await User.findOne({
-      where: { email }
+      where: { email,role:'user' }
     });
     if (!user) {
       return notFoundResponse(res, 'User not found')

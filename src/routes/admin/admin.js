@@ -2,7 +2,7 @@
 const express = require("express");
 const router = express.Router();
 
-const { signIn } = require("../../controllers/auth/admin/auth");
+const { signIn, signUp } = require("../../controllers/auth/admin/auth");
 const {
   getAllUsers,
   deleteUser,
@@ -14,8 +14,11 @@ const {
 const {
   listApplications,
 } = require("../../controllers/company/admin/applicationsController");
+const { getOverview } = require("../../controllers/company/admin/overview");
 
 router.post("/login", signIn);
+router.post("/signup", signUp);
+
 router.get("/get-users", getAllUsers); // get all users
 router.get("/get-companies", getAllCompanies); // get all companies
 
@@ -23,5 +26,7 @@ router.delete("/delete-user/:id", deleteUser); // delete user by ID
 router.delete("/delete-company/:id", deleteCompany); // delete company by ID
 
 router.get("/list-applications", listApplications);
+
+router.get("/overview", getOverview);
 
 module.exports = router;

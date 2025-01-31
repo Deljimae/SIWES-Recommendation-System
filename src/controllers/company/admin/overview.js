@@ -1,10 +1,18 @@
-const { successResponse } = require("../../../utils/response");
+const { successResponse, errorResponse } = require("../../../utils/response");
 const { User, Company, Applications } = require("./.././../../../models");
+const { Op } = require("sequelize");
 // Controller to get total counts for applications, users, and companies
 const getOverview = async (req, res) => {
   try {
     const totalApplications = await Applications.count();
-    const totalUsers = await User.count();
+    // Count all users except admins
+    const totalUsers = await User.count({
+      where: {
+        role: {
+          [Op.ne]: "admin", // Using Op.ne operator for not equal comparison
+        },
+      },
+    });
     const totalCompanies = await Company.count();
     return successResponse(res, "Fetched Successfully", {
       totalApplications,
@@ -12,10 +20,7 @@ const getOverview = async (req, res) => {
       totalCompanies,
     });
   } catch (error) {
-    return res.status(500).json({
-      message: "Error getting total counts",
-      error: error.message,
-    });
+    return errorResponse(res, error.message, 500);
   }
 };
 

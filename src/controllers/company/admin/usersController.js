@@ -9,7 +9,7 @@ const {
 // Get all users
 const getAllUsers = async (req, res) => {
   try {
-    const users = await User.findAll();
+    const users = await User.findAll({ where: { role: "user" } });
     return successResponse(res, "fetched successfully", {
       users,
       count: users.length,

@@ -1,5 +1,5 @@
 // Controller for managing user operations
-const { User } = require("../../../../models");
+const { User, Profile } = require("../../../../models");
 const {
   successResponse,
   errorResponse,
@@ -23,16 +23,21 @@ const getAllUsers = async (req, res) => {
 const deleteUser = async (req, res) => {
   try {
     const { id } = req.params;
+
+    // Delete related records in the profiles table first
+    await Profile.destroy({ where: { userId: id } });
+
+    // Then delete the user
     const deletedUser = await User.findByPk(id);
 
     if (!deletedUser) {
       return notFoundResponse(res, "User not found");
     }
 
-    await deleteUser.destroy();
-
-    return successResponse(res, "User deleted successfully", deletedUser);
+    await deletedUser.destroy();
+    return successResponse(res, "User deleted successfully");
   } catch (error) {
+    console.error(error);
     return errorResponse(res, error.message, 500);
   }
 };

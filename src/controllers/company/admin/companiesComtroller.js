@@ -11,7 +11,7 @@ const getAllCompanies = async (req, res) => {
   try {
     const companies = await Company.findAll();
     return successResponse(res, "fetched successfully", {
-      ...companies,
+      companies,
       count: companies.length,
     });
   } catch (error) {

@@ -1,4 +1,4 @@
-const { Applications } = require("../../../../models");
+const { Applications, Company, User } = require("../../../../models");
 const { successResponse, errorResponse } = require("../../../utils/response");
 
 // Controller to list all applications with company and user details
@@ -7,12 +7,12 @@ const listApplications = async (req, res) => {
     const applications = await Applications.findAll({
       include: [
         {
-          model: Companies,
+          model: Company,
           as: "company",
           attributes: { exclude: ["createdAt", "updatedAt"] },
         },
         {
-          model: Users,
+          model: User,
           as: "user",
           attributes: { exclude: ["password", "createdAt", "updatedAt"] },
         },

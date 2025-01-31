@@ -13,7 +13,7 @@ const listApplications = async (req, res) => {
         },
         {
           model: User,
-          as: "user",
+          as: "userDetails",
           attributes: { exclude: ["password", "createdAt", "updatedAt"] },
         },
       ],

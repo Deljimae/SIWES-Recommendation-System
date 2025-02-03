@@ -1,5 +1,6 @@
 const { Applications, Company, Profile, User } = require('../../../models');
 const { successResponse, errorResponse, customResponse } = require('../../utils/response');
+const Joi = require('joi');
 
 const applications = {
   // Get applications for a specific company
@@ -37,6 +38,40 @@ const applications = {
       return errorResponse(res, error.message)
     }
   },
+
+  async updateCompanyAplications(req, res) {
+    const { companyId } = req.user;
+    const { id } = req.params;
+
+    const schema = Joi.object({
+      status: Joi.string().required()
+    }).validate(req.body)
+
+    const { error } = schema;
+
+    if (error) {
+      return errorResponse(res, 'Invalid data passed', '400')
+    }
+
+    try {
+      const { status } = req.body;
+      const application = await Applications.findOne({
+        where: {
+          uuid: id,
+          company_uuid: companyId
+        }
+      });
+      if (!application) {
+        return errorResponse(res, 'Application not found', 404);
+      }
+      await application.update({ status });
+      return successResponse(res, 'Application updated successfully', application);
+    } catch (error) {
+      errorResponse(res, error.message)
+    }
+
+
+  }
 };
 
 module.exports = applications;

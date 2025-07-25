@@ -1,4 +1,4 @@
-# SIWES RECOMMENDATION SYSTEM
+#DEVELOPMENT OF AN AI - ENABLED SIWES RECOMMENDATION SYSTEM
 
 `Note: Ensure to use the real values in your .env file`
 
